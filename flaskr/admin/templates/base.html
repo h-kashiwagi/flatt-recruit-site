@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="ja">
+    <head>
+        <meta charset="utf-8">
+        <title></title>
+    </head>
+    <body>
+    <ul class="nav">
+        <li><a href="{{url_for('admin.home')}}">ホーム</a></li>
+        {% if current_user.is_authenticated %}
+        <li><a href="{{url_for('admin.logout')}}">ログアウト</a></li>
+        {% else %}
+        <li><a href="{{url_for('admin.login')}}">ログイン</a></li>
+        <li><a href="{{url_for('admin.register')}}">登録</a></li>
+        {% endif %}
+        <li><a href="{{url_for('admin.user')}}">ユーザー画面</a></li>
+    </ul>
+    {% block content %}
+    {% endblock %}
+    </body>
+</html>
