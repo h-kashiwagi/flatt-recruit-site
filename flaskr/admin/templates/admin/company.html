@@ -1,0 +1,269 @@
+
+{% extends "base2.html" %}
+{% block content %}
+<style>
+  .card-body label {
+    display: inline-block;
+    width: 7em;
+    color: ;
+  }
+</style>
+        <!-- partial -->
+        <div class="main-panel">
+          <div class="content-wrapper">
+            <div class="page-header">
+              <h3 class="page-title">
+                <span class="p-1 page-title-icon bg-gradient-primary text-white me-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z"/>
+                    <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z"/>
+                  </svg>
+                </span> 会社マスタ
+              </h3>
+              <nav aria-label="breadcrumb">
+                <ul class="breadcrumb">
+                  <li class="breadcrumb-item active" aria-current="page">
+                    <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+<!--            
+            <div class="row">
+              <div class="col-md-7 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="clearfix">
+                      <h4 class="card-title float-left">検索一覧</h4>
+                      <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
+                    </div>
+                    <canvas id="visit-sale-chart" class="mt-4"></canvas>
+                  </div>
+                </div>
+              </div>
+-->
+<!--
+             <div class="col-md-5 grid-margin stretch-card">
+                <div class="card">
+                  <div class="card-body">
+                    <h4 class="card-title">検索条件</h4>
+                    <canvas id="traffic-chart"></canvas>
+                    <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
+                  </div>
+                  <div class="add-items d-flex">
+                    <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?">
+                    <button class="add btn btn-gradient-primary font-weight-bold todo-list-add-btn" id="add-task">Add</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+-->
+          <ul class="nav nav-tabs" role="tablist">
+            <li class="nav-item">
+              <a class="nav-link active" href="#home" data-toggle="tab" role="tab">検索・編集・削除</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#middle" data-toggle="tab" role="tab">新規登録</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#finish" data-toggle="tab" role="tab">一括登録</a>
+            </li>
+          </ul> 
+          <div class="tab-content">  
+            <div class="tab-pane fade show active" id="home" role="tabpanel">
+              <div class="row">
+                <div class="col-12 grid-margin">
+                  <div class="card">
+                    <div class="card-body">
+                      <h4 class="card-title">検索一覧</h4>
+                      <div class="table-responsive">
+                        <table class="table table-striped">
+                          <thead class="thead-dark">
+                            <tr>
+                              <th> ID </th>
+                              <th> 会社名 </th>
+                              <th> 業種ID </th>
+                              <th> 職種ID </th>
+                              <th> 勤務地 </th>
+                              <th> 業務内容 </th>
+                              <th> 求める人物像 </th>
+                              <th> 想定年収 </th>
+                              <th> 想定月収 </th>
+                              <th> URL </th>
+                              <th> 資本金 </th>
+                              <th> 設立年月日 </th>
+                              <th> 従業員数 </th>
+                              <th> 本社所在地 </th>
+                              <th> 代表者 </th>
+                              <th> 事業内容 </th>
+                              <th> メッセージ </th>
+                              <th> 掲載フラグ </th>
+                              <th> 削除フラグ </th>
+                              <th> 登録日 </th>
+                              <th> 更新日 </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {% for item in data %}
+                            <tr>
+                              <td>{{ item.id }}</td>
+                              <td>{{ item.name }}</td>
+                              <td>{{ item.industry_id }}</td>
+                              <td>{{ item.occupation_id }}</td>
+                              <td>{{ item.work_location }}</td>
+                              <td>{{ item.job_role }}</td>
+                              <td>{{ item.ideal }}</td>
+                              <td>{{ item.anuual_income }}</td>
+                              <td>{{ item.monthly_income }}</td>
+                              <td>{{ item.url }}</td>
+                              <td>{{ item.capital }}</td>
+                              <td>{{ item.established }}</td>
+                              <td>{{ item.employees }}</td>
+                              <td>{{ item.head_office }}</td>
+                              <td>{{ item.representative }}</td>
+                              <td>{{ item.business_content }}</td>
+                              <td>{{ item.message }}</td>
+                              <td>{{ item.is_published }}</td>
+                              <td>{{ item.del_flg }}</td>
+                              <td>{{ item.created_at }}</td>
+                              <td>{{ item.updated_at }}</td>
+                            </tr>
+                            {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="middle" role="tabpanel">
+              <form action="{{url_for('admin.create')}}" method="POST" enctype="multipart/form-data">
+                <div class="card">
+                  <div class="card-body">
+                    <div class="form-group">
+                      <label for="name">会社名</label>
+                      <input type="text" class="form-control" id="name" name="name">
+                    </div>
+                    <div class="form-group">
+                      <label for="industry_id">業種ID</label>
+                      <input type="text" class="form-control" id="industry_id" name="industry_id">
+                    </div>
+                    <div class="form-group">
+                      <label for="occupation_id">職種ID</label>
+                      <input type="text" class="form-control" id="occupation_id" name="occupation_id">
+                    </div>
+                    <div class="form-group">
+                      <label for="work_location">勤務地</label>
+                      <input type="text" class="form-control" id="work_location" name="work_location">
+                    </div>
+                    <div class="form-group">
+                      <label for="job_role">業務内容</label>
+                      <input type="text" class="form-control" id="job_role" name="job_role">
+                    </div>
+                    <div class="form-group">
+                      <label for="ideal">求める人物像</label>
+                      <input type="text" class="form-control" id="ideal" name="ideal">
+                    </div>
+                    <div class="form-group">
+                      <label for="anuual_income">想定年収</label>
+                      <input type="text" class="form-control" id="anuual_income" name="anuual_income">
+                    </div>
+                    <div class="form-group">
+                      <label for="monthly_income">想定月収</label>
+                      <input type="text" class="form-control" id="monthly_income" name="monthly_income">
+                    </div>
+                    <div class="form-group">
+                      <label for="url">URL</label>
+                      <input type="text" class="form-control" id="url" name="url">
+                    </div>
+                    <div class="form-group">
+                      <label for="capital">資本金</label>
+                      <input type="text" class="form-control" id="capital" name="capital">
+                    </div>
+                    <div class="form-group">
+                      <label for="established">設立年月日</label>
+                      <input type="text" class="form-control" id="established" name="established">
+                    </div>
+                    <div class="form-group">
+                      <label for="employees">従業員数</label>
+                      <input type="text" class="form-control" id="employees" name="employees">
+                    </div>
+                    <div class="form-group">
+                      <label for="head_office">本社所在地</label>
+                      <input type="text" class="form-control" id="head_office" name="head_office">
+                    </div>
+                    <div class="form-group">
+                      <label for="representative">代表者</label>
+                      <input type="text" class="form-control" id="representative" name="representative">
+                    </div>
+                    <div class="form-group">
+                      <label for="business_content">事業内容</label>
+                      <input type="text" class="form-control" id="business_content" name="business_content">
+                    </div>
+                    <div class="form-group">
+                      <label for="message">メッセージ</label>
+                      <input type="text" class="form-control" id="message" name="message">
+                    </div>
+    <!--           
+                    <div class="form-group">
+                      <label for="is_published">掲載フラグ</label>
+                      <div class="m-1 btn-group-toggle" data-toggle="buttons" >
+                        <label class="btn btn-light active">
+                          <input type="checkbox" id="is_published">
+                        </label>  
+                      </div> 
+                    </div>
+  -->
+                    <div class="form-group">
+                      <label for="is_published">掲載フラグ</label>
+                      <select class="form-control" id="is_published" name="is_published">
+                        <option value="">選択して下さい</option>
+                        <option value="true">掲載する</option>
+                        <option value="false">掲載しない</option>
+                      </select> 
+                    </div>
+  <!--                 
+                    <div class="form-group">
+                      <label for="del_flg">削除フラグ</label>
+                      <div class="btn-group-toggle" data-toggle="buttons" >
+                        <label class="btn btn-light active">
+                          <input type="checkbox" id="del_flg">
+                        </label>
+                      </div> 
+                    </div>
+  -->   
+                    <div class="form-group">
+                      <label for="del_flg">削除フラグ</label>
+                      <select class="form-control" id="del_flg" name="del_flg">
+                        <option value="">選択して下さい</option>
+                        <option value="false">削除しない</option>
+                        <option value="true">削除する</option>
+                      </select> 
+                    </div>
+                    <div class="form-group">
+                      <button class="m-1 btn btn-primary" type="submit">登録</button> 
+                    </div>
+                  </div>
+                </div>
+              </form> 
+            </div>
+            <div class="tab-pane fade" id="finish" role="tabpanel">
+            ccc
+            </div>
+          </div>
+          <!-- content-wrapper ends -->
+          <!-- partial:partials/_footer.html -->
+          <footer class="footer">
+            <div class="container-fluid d-flex justify-content-between">
+              <span class="text-muted d-block text-center text-sm-start d-sm-inline-block">Copyright © bootstrapdash.com 2023</span>
+              <span class="float-none float-sm-end mt-1 mt-sm-0 text-end"> Free <a href="https://www.bootstrapdash.com/bootstrap-admin-template/" target="_blank">Bootstrap admin template</a> from Bootstrapdash.com</span>
+            </div>
+          </footer>
+          <!-- partial -->
+        </div>
+        <!-- main-panel ends -->
+      </div>
+      <!-- page-body-wrapper ends -->
+    </div>
+    {% endblock %}

@@ -2,7 +2,7 @@ from wtforms.form import Form
 from wtforms.fields import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, Email, EqualTo, Length
 from wtforms import ValidationError
-from flaskr.models.admin import User
+from flaskr.models.user import User
 
 # ログイン画面で利用
 class LoginForm(Form):

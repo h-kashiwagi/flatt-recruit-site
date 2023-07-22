@@ -7,7 +7,7 @@ from flask_migrate import Migrate
 from flask_login import LoginManager
 from config import Config
 from config import DevelopmentConfig
-from flaskr.admin.views import bp
+from sqlalchemy import create_engine
 
 # @login_requiredに対応する処理
 login_manager = LoginManager()
@@ -16,15 +16,25 @@ login_manager.login_view = 'admin.login'
 # ログインにリダイレクトした際のメッセージ
 login_manager.login_message = 'ログインしてください'
 
-basedir = os.path.abspath(os.path.dirname(__name__))
 db = SQLAlchemy()
 migrate = Migrate()
 
-def create_app():
-    app = Flask(__name__)
-    app.config.from_object(Config)
-    app.config.from_object(DevelopmentConfig)
+# SQLiteのEngin
+# engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
+engine = create_engine(Config.SQLALCHEMY_DATABASE_URI)
 
+from flaskr.models import company, condition, image, industry, manager, occupation, relation
+
+def create_app():
+    app = Flask(__name__, static_folder='./admin/static')
+    app.config.from_object(Config)
+    # 開発環境
+    app.config.from_object(DevelopmentConfig)
+    # 本番環境
+    # app.config.from_object(ProductionConfig)
+
+    from flaskr.admin.views import bp
+ 
     app.register_blueprint(bp)
     db.init_app(app)
     migrate.init_app(app, db)
@@ -32,10 +42,14 @@ def create_app():
     return app
 
 # def create_app():
-#     app = Flask(__name__)
-#     from flaskr.admin.views import admin_bp
-#     from flaskr.recruit.views import recruit_bp
-
-#     app.register_blueprint(admin_bp)
-#     app.register_blueprint(recruit_bp)
+#     app = Flask(__name__, static_folder='./admin/static')
+#     app.config.from_object(Config)
+#     app.config.from_object(DevelopmentConfig)
+    
+#     from flaskr.admin.views import bp
+ 
+#     app.register_blueprint(bp)
+#     db.init_app(app)
+#     migrate.init_app(app, db)
+#     login_manager.init_app(app)
 #     return app

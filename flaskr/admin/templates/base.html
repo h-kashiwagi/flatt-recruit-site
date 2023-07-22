@@ -3,9 +3,23 @@
     <head>
         <meta charset="utf-8">
         <title></title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Purple Admin</title>
+    <!-- plugins:css -->
+    <link rel="stylesheet" href={{ url_for('static', filename='vendors/mdi/css/materialdesignicons.min.css') }}>
+    <link rel="stylesheet" href={{ url_for('static', filename='vendors/css/vendor.bundle.base.css') }}>
+    <!-- endinject -->
+    <!-- Plugin css for this page -->
+    <!-- End plugin css for this page -->
+    <!-- inject:css -->
+    <!-- endinject -->
+    <!-- Layout styles -->
+    <link rel="stylesheet" href={{ url_for('static', filename='css/style.css') }}>
     </head>
     <body>
-    <ul class="nav">
+    <ul>
         <li><a href="{{url_for('admin.home')}}">ホーム</a></li>
         {% if current_user.is_authenticated %}
         <li><a href="{{url_for('admin.logout')}}">ログアウト</a></li>
@@ -13,7 +27,8 @@
         <li><a href="{{url_for('admin.login')}}">ログイン</a></li>
         <li><a href="{{url_for('admin.register')}}">登録</a></li>
         {% endif %}
-        <li><a href="{{url_for('admin.user')}}">ユーザー画面</a></li>
+        <li><a href="{{url_for('admin.user')}}">ユーザー管理</a></li>
+        <li><a href="{{url_for('admin.top')}}">企業情報管理</a></li>
     </ul>
     {% block content %}
     {% endblock %}
