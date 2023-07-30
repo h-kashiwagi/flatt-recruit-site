@@ -33,9 +33,9 @@ def create_app():
     # 本番環境
     # app.config.from_object(ProductionConfig)
 
-    from flaskr.admin.views import bp
+    from flaskr.admin.views import admin
  
-    app.register_blueprint(bp)
+    app.register_blueprint(admin)
     db.init_app(app)
     migrate.init_app(app, db)
     login_manager.init_app(app)

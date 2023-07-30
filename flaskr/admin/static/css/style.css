@@ -14381,7 +14381,7 @@ dl {
   .rtl ul.chats::-webkit-scrollbar-thumb {
     background-color: darkgrey;
     outline: 1px solid slategrey; }
-
+/*
 .page-body-wrapper {
   min-height: calc(100vh - 70px);
   display: -webkit-box;
@@ -14413,7 +14413,15 @@ dl {
     .main-panel {
       margin-left: 0;
       width: 100%; } }
+*/
 
+.page-body-wrapper {
+
+}
+
+.main-panel {
+  margin-top:100px;
+}
 .content-wrapper {
   background: #f2edf3;
   padding: 2.75rem 2.25rem;

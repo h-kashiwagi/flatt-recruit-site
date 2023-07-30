@@ -85,15 +85,72 @@ class Company(db.Model):
         ses.close()
         return
     
-    # 全件
+    # 更新
+    def updateData(self):
+        Session = sessionmaker(bind=engine)
+        ses = Session()
+        obj = ses.query(Company).filter(Company.id == self.id).one()
+        obj.name = self.name
+        obj.industry_id = self.industry_id
+        obj.occupation_id = self.occupation_id
+        obj.work_loction = self.work_location
+        obj.job_role = self.job_role
+        obj.ideal = self.ideal
+        obj.anuual_income = self.anuual_income
+        obj.monthly_income = self.monthly_income
+        obj.url = self.url
+        obj.capital = self.capital
+        obj.established = self.established
+        obj.employees = self.employees
+        obj.head_office = self.head_office
+        obj.representative = self.representative
+        obj.business_content = self.business_content
+        obj.message = self.message
+        obj.is_published = self.is_published
+        obj.del_flg = self.del_flg
+        obj.updated_at = datetime.now(timezone('Asia/Tokyo')).replace(second=0, microsecond=0)
+        ses.add(obj)
+        ses.commit()
+        ses.close()
+        return
+
+    # 全件取得
     @classmethod
     def getAll(cls):
         Session = sessionmaker(bind=engine)
         ses = Session()
-        res = ses.query(cls).all()
+        objs = ses.query(cls).all()
         ses.close()
-        return res
+        return objs
     
+    # 1レコード取得
+    @classmethod
+    def getByPk(cls, key):
+        Session = sessionmaker(bind=engine)
+        ses = Session()
+        obj = ses.query(cls).filter(cls.id == key).one()
+        ses.close()
+        return obj
+    
+    # 検索
+    @classmethod
+    def getSearchData(cls, name):
+        Session = sessionmaker(bind=engine)
+        ses = Session()
+        objs = ses.query(cls).filter(cls.name.contains(name)).all()
+        ses.close()
+        return objs
+    
+    # 1レコード削除
+    @classmethod
+    def deleteOneData(cls, key):
+        Session = sessionmaker(bind=engine)
+        ses = Session()
+        obj = ses.query(cls).filter(cls.id == key).one()
+        ses.delete(obj)
+        ses.commit()
+        ses.close()
+        return
     
 # タグ
 class Tag(db.Model):
@@ -120,3 +177,5 @@ class Tag(db.Model):
         res = ses.query(cls).all()
         ses.close()
         return res 
+ 
+   

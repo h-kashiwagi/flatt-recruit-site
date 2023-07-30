@@ -8,59 +8,20 @@
     color: ;
   }
 </style>
-        <!-- partial -->
-        <div class="main-panel">
-          <div class="content-wrapper">
-            <div class="page-header">
-              <h3 class="page-title">
-                <span class="p-1 page-title-icon bg-gradient-primary text-white me-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-building" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z"/>
-                    <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z"/>
-                  </svg>
-                </span> 会社マスタ
-              </h3>
-              <nav aria-label="breadcrumb">
-                <ul class="breadcrumb">
-                  <li class="breadcrumb-item active" aria-current="page">
-                    <span></span>Overview <i class="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-<!--            
-            <div class="row">
-              <div class="col-md-7 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="clearfix">
-                      <h4 class="card-title float-left">検索一覧</h4>
-                      <div id="visit-sale-chart-legend" class="rounded-legend legend-horizontal legend-top-right float-right"></div>
-                    </div>
-                    <canvas id="visit-sale-chart" class="mt-4"></canvas>
-                  </div>
-                </div>
-              </div>
--->
-<!--
-             <div class="col-md-5 grid-margin stretch-card">
-                <div class="card">
-                  <div class="card-body">
-                    <h4 class="card-title">検索条件</h4>
-                    <canvas id="traffic-chart"></canvas>
-                    <div id="traffic-chart-legend" class="rounded-legend legend-vertical legend-bottom-left pt-4"></div>
-                  </div>
-                  <div class="add-items d-flex">
-                    <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?">
-                    <button class="add btn btn-gradient-primary font-weight-bold todo-list-add-btn" id="add-task">Add</button>
-                  </div>
-                </div>
-              </div>
-            </div>
--->
+
+    <!-- partial -->
+    <div class="container-fluid page-body-wrapper">
+      <div class="main-panel">
+        <div class="content-wrapper">
+          <div class="page-header">
+            <h3 class="page-title" style="font-weight:bold;">
+              会社マスタ
+            </h3>
+          </div>
+          
           <ul class="nav nav-tabs" role="tablist">
             <li class="nav-item">
-              <a class="nav-link active" href="#home" data-toggle="tab" role="tab">検索・編集・削除</a>
+              <a class="nav-link active" href="#home" data-toggle="tab" role="tab">検索一覧</a>
             </li>
             <li class="nav-item">
               <a class="nav-link" href="#middle" data-toggle="tab" role="tab">新規登録</a>
@@ -75,11 +36,358 @@
                 <div class="col-12 grid-margin">
                   <div class="card">
                     <div class="card-body">
-                      <h4 class="card-title">検索一覧</h4>
-                      <div class="table-responsive">
+                    
+                    <!--検索ボックス-->  
+                    <div class="mx-auto" style="margin-bottom: 20px;width:50%;">
+                      <div class="row col-xs-5">
+                          <form method="GET">
+                            <div class="input-group">
+                              <input type="text" id="txt-search" class="form-control input-group-prepend" placeholder="会社名を入力" name="search"></input>
+                              <span class="input-group-btn input-group-append">
+                                <button type="submit" id="btn-search" class="btn btn-primary"><i class="fas fa-search"></i>検索</button>
+                              </span>
+                            </div>
+                          </form>
+                      </div>
+                    </div>
+                
+                    <div style="text-align: right;">
+                      <!--<h4 class="card-title">編集</h4>-->
+                      <button type="button" id="editbtn" class="btn btn-warning" data-toggle="modal" data-target="" onclick="getStatusEdit()">編集</button> 
+                      <!--チェックを実行してから指定したモーダルを開く-->
+                      <button type="button" id="deletebtn" class="btn btn-danger" data-toggle="modal" data-target="" onclick="getStatusDelete()">削除</button>
+                    </div>
+                    <!-- Modal -->
+                    <div class="modal fade" id="update-form">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <form id="m-form">
+                            <div class="modal-header">
+                              <h3 class="modal-title">
+                                編集
+                              </h3>  
+                            </div>
+                            <div class="modal-body">
+                              <div class="form-group">
+                                <label for="name">会社名</label>
+                                <input type="text" class="form-control" id="m-name" name="m-name">
+                              </div>
+                              <div class="form-group">
+                                <label for="industry_id">業種ID</label>
+                                <input type="text" class="form-control" id="m-industry_id" name="m-industry_id">
+                              </div>
+                              <div class="form-group">
+                                <label for="occupation_id">職種ID</label>
+                                <input type="text" class="form-control" id="m-occupation_id" name="m-occupation_id">
+                              </div>
+                              <div class="form-group">
+                                <label for="work_location">勤務地</label>
+                                <input type="text" class="form-control" id="m-work_location" name="m-work_location">
+                              </div>
+                              <div class="form-group">
+                                <label for="job_role">業務内容</label>
+                                <input type="text" class="form-control" id="m-job_role" name="m-job_role">
+                              </div>
+                              <div class="form-group">
+                                <label for="ideal">求める人物像</label>
+                                <input type="text" class="form-control" id="m-ideal" name="m-ideal">
+                              </div>
+                              <div class="form-group">
+                                <label for="anuual_income">想定年収</label>
+                                <input type="text" class="form-control" id="m-anuual_income" name="m-anuual_income">
+                              </div>
+                              <div class="form-group">
+                                <label for="monthly_income">想定月収</label>
+                                <input type="text" class="form-control" id="m-monthly_income" name="m-monthly_income">
+                              </div>
+                              <div class="form-group">
+                                <label for="url">URL</label>
+                                <input type="text" class="form-control" id="m-url" name="m-url">
+                              </div>
+                              <div class="form-group">
+                                <label for="capital">資本金</label>
+                                <input type="text" class="form-control" id="m-capital" name="m-capital">
+                              </div>
+                              <div class="form-group">
+                                <label for="established">設立年月日</label>
+                                <input type="text" class="form-control" id="m-established" name="m-established">
+                              </div>
+                              <div class="form-group">
+                                <label for="employees">従業員数</label>
+                                <input type="text" class="form-control" id="m-employees" name="m-employees">
+                              </div>
+                              <div class="form-group">
+                                <label for="head_office">本社所在地</label>
+                                <input type="text" class="form-control" id="m-head_office" name="m-head_office">
+                              </div>
+                              <div class="form-group">
+                                <label for="representative">代表者</label>
+                                <input type="text" class="form-control" id="m-representative" name="m-representative">
+                              </div>
+                              <div class="form-group">
+                                <label for="business_content">事業内容</label>
+                                <input type="text" class="form-control" id="m-business_content" name="m-business_content">
+                              </div>
+                              <div class="form-group">
+                                <label for="message">メッセージ</label>
+                                <input type="text" class="form-control" id="m-message" name="m-message">
+                              </div>
+                              <div class="form-group">
+                                <label for="is_published">掲載フラグ</label>
+                                <select class="form-control" id="m-is_published" name="m-is_published">
+                                  <option value="ON">掲載する</option>
+                                  <option value="">掲載しない</option>
+                                </select> 
+                              </div>
+                              <div class="form-group">
+                                <label for="del_flg">削除フラグ</label>
+                                <select class="form-control" id="m-del_flg" name="m-del_flg">
+                                  <option value="">削除しない</option>
+                                  <option value="ON">削除する</option>
+                                </select> 
+                              </div>
+                            </div>
+                            <div class="modal-footer">
+                              <!-- bootstrapのバージョンによってdata-bs-dismiss(5.0)が機能しない-->
+                              <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+                              <button type="button" id="action-editbtn" class="btn btn-primary" data-dismiss="modal">更新</button>
+                              <input type="hidden" id="m-id" />
+                            </div>
+                            <input name="csrfToken" value="{{ csrf_token }}" type="hidden">
+                          </form>  
+                        </div>
+                      </div>      
+                    </div>
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="delete-alert">
+                      <div class="modal-dialog" role="document">
+                        <div class="alert alert-primary" role="alert">
+                          <h6>削除するアイテムを選択してください。</h6>
+                        </div>
+                      </div> 
+                    </div>
+
+                    <div class="modal fade" id="edit-alert-1">
+                      <div class="modal-dialog" role="document">
+                        <div class="alert alert-primary" role="alert">
+                            <h6>更新するアイテムを1つ選択してください。</h6>
+                            <h6>※複数のアイテムが選択されています。</h6>
+                        </div>
+                      </div> 
+                    </div>
+
+                    <div class="modal fade" id="edit-alert-2">
+                      <div class="modal-dialog" role="document">
+                        <div class="alert alert-primary" role="alert">
+                            <h6>更新するアイテムを選択してください。</h6>
+                        </div>
+                      </div> 
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="dlog" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">削除確認</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            選択したデータを削除しますか？
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">キャンセル</button>
+                            <!--data-dismissによって裏側の非同期より先に閉じる-->
+                            <button type="button" class="btn btn-primary" id="delete_item" data-dismiss="modal">実行</button>
+                          </div>
+                          <input name="csrfToken" value="{{ csrf_token }}" type="hidden">
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="dlog-success">
+                      <div class="modal-dialog" role="document">
+                        <div class="alert alert-primary" role="alert">
+                            削除が完了しました。
+                            <button type="button" class="btn btn-secondary" id="done" data-dismiss="modal">OK</button>  
+                        </div>
+                      </div> 
+                    </div>
+
+<!--
+<script>
+  const myModal = new bootstrap.Modal(document.getElementById('form'), {})
+  const btns = document.querySelectorAll('button')
+
+  for (const btn of btns) {
+    btn.addEventListener('click', (e) => {
+      const modalTitle = document.querySelector('.modal-title')
+      modalTitle.textContent = e.target.getAttribute('data-modal-title')
+      myModal.show()
+    })
+  }
+</script>
+-->
+<script>
+  function getStatusDelete() {
+    let checkedList = document.querySelectorAll("input[name=checkid]:checked");
+    // 確認モーダル
+    if( 0 < checkedList.length ) {
+      document.querySelector('#deletebtn').dataset.target = '#dlog';
+      let name = document.querySelector('#deletebtn').dataset.target;
+    } 
+    // 未選択モーダル
+    if (checkedList.length === 0) {
+        document.querySelector('#deletebtn').dataset.target = '#delete-alert';
+        let name = document.querySelector('#deletebtn').dataset.target;
+      return;
+    }
+  }
+
+  function getStatusEdit() {
+    let checkedList = document.querySelectorAll("input[name=checkid]:checked");
+    // 複数選択モーダル
+    if( 1 < checkedList.length ) {
+      document.querySelector('#editbtn').dataset.target = '#edit-alert-1';
+      let name = document.querySelector('#editbtn').dataset.target;
+    }  
+    if(checkedList.length === 1) {
+      document.querySelector('#editbtn').dataset.target = '#update-form';
+      let name = document.querySelector('#editbtn').dataset.target;
+      
+      id = checkedList[0].value
+
+      $.ajax({
+        url: "/select/" + id,
+        type: "GET",
+      }).done(function(data, textStatus, jqXHR){
+        document.getElementById("m-id").value = data.id ;
+        document.getElementById("m-name").value = data.name ;
+        document.getElementById("m-industry_id").value = Number(data.industry_id) ;
+        document.getElementById("m-occupation_id").value = Number(data.occupation_id) ;
+        document.getElementById("m-work_location").value = data.work_location ;
+        document.getElementById("m-job_role").value = data.job_role ;
+        document.getElementById("m-ideal").value = data.ideal ;
+        document.getElementById("m-anuual_income").value = Number(data.anuual_income) ;
+        document.getElementById("m-monthly_income").value = Number(data.monthly_income) ;
+        document.getElementById("m-url").value = data.url ;
+        document.getElementById("m-capital").value = Number(data.capital) ;
+        document.getElementById("m-established").value = data.established ;
+        document.getElementById("m-employees").value = Number(data.employees) ;
+        document.getElementById("m-head_office").value = data.head_office ;
+        document.getElementById("m-representative").value = data.representative ;
+        document.getElementById("m-business_content").value = data.business_content ;
+        document.getElementById("m-message").value = data.message ;
+        // document.getElementById("m-is_published").value = data.is_published ;
+        // document.getElementById("m-del_flg").value = data.del_flg ;
+ /*    
+        let elm = document.getElementById("m-is_published").options;
+        for(let option of elm) {
+          if(option.value == data.is_published) {
+            option.selected = true
+          }    
+        }
+*/
+      }).fail(function(jqXHR, textStatus, errorThrown){
+        // エラーの場合処理
+      });
+    }  
+    // 未選択モーダル
+    if (checkedList.length === 0) {
+        document.querySelector('#editbtn').dataset.target = '#edit-alert-2';
+        let name = document.querySelector('#editbtn').dataset.target;
+      return;
+    }
+  }
+</script>
+
+<script>
+  $('#delete_item').click(function(){
+      var keyArray = new Array();
+      // チェックされている要素をすべて取得
+      let checkedList = document.querySelectorAll("input[name=checkid]:checked");
+      // 配列からデータを取得
+      for(let checked_data of checkedList) {
+        keyArray.push(checked_data.value);
+      }
+      NumKeyArry = keyArray.map(Number);
+
+      var token = $('input[name="csrfToken"]').attr('value');
+      $.ajaxSetup({
+          beforeSend:function(xhr){
+              xhr.setRequestHeader('X-CSRFToken', token);
+          }   
+      })
+
+      $.ajax({
+          url: "{{ url_for('admin.delete_company_ajax') }}",
+          type: "POST",
+          data: {'keys':JSON.stringify(NumKeyArry)},
+          success: function(){
+            location.reload();
+            // $('#dlog-success').modal('show');
+          }
+ /*
+          error: function(error){
+            alert(error.responseJSON.message);
+          }
+*/
+      });
+  });
+
+  $('#action-editbtn').click(function(){
+    var formData = new FormData();
+    formData.append("name", $("#m-name").val());
+    formData.append("industry_id", $("#m-industry_id").val());
+    formData.append("occupation_id", $("#m-occupation_id").val());
+    formData.append("work_location", $("#m-work_location").val());
+    formData.append("job_role", $("#m-job_role").val());
+    formData.append("ideal", $("#m-ideal").val());
+    formData.append("anuual_income", $("#m-anuual_income").val());
+    formData.append("monthly_income", $("#m-monthly_income").val());
+    formData.append("url", $("#m-url").val());
+    formData.append("capital", $("#m-capital").val());
+    formData.append("established", $("#m-established").val());
+    formData.append("employees", $("#m-employees").val());
+    formData.append("head_office", $("#m-head_office").val());
+    formData.append("representative", $("#m-representative").val());
+    formData.append("business_content", $("#m-business_content").val());
+    formData.append("message", $("#m-message").val());
+    formData.append("is_published", $("#m-is_published").val());
+    formData.append("del_flg", $("#m-del_flg").val());
+    // 環境に設定してある値があるなら実行後に初期化するのもあり
+    // let self = this;
+    var token = $('input[name="csrfToken"]').attr('value');
+    $.ajaxSetup({
+        beforeSend:function(xhr){
+            xhr.setRequestHeader('X-CSRFToken', token);
+        }   
+    })
+
+    $.ajax({
+      url: "/update/" + $("#m-id").val(),
+      type: "POST",
+      data: formData,
+      // FormData送信用
+      contentType: false,
+      processData: false,
+      success: function(){
+        location.reload();
+      }
+    });
+  });
+  </script>
+
+                      <div class="table-responsive mt-2">
                         <table class="table table-striped">
                           <thead class="thead-dark">
                             <tr>
+                              <th> 選択 </th>
                               <th> ID </th>
                               <th> 会社名 </th>
                               <th> 業種ID </th>
@@ -106,6 +414,7 @@
                           <tbody>
                             {% for item in data %}
                             <tr>
+                              <td><input type="checkbox" name="checkid" id="chkmodal" value="{{ item.id }}"></td>
                               <td>{{ item.id }}</td>
                               <td>{{ item.name }}</td>
                               <td>{{ item.industry_id }}</td>
@@ -218,9 +527,8 @@
                     <div class="form-group">
                       <label for="is_published">掲載フラグ</label>
                       <select class="form-control" id="is_published" name="is_published">
-                        <option value="">選択して下さい</option>
-                        <option value="true">掲載する</option>
-                        <option value="false">掲載しない</option>
+                        <option value="ON">掲載する</option>
+                        <option value="">掲載しない</option>
                       </select> 
                     </div>
   <!--                 
@@ -236,9 +544,8 @@
                     <div class="form-group">
                       <label for="del_flg">削除フラグ</label>
                       <select class="form-control" id="del_flg" name="del_flg">
-                        <option value="">選択して下さい</option>
-                        <option value="false">削除しない</option>
-                        <option value="true">削除する</option>
+                        <option value="">削除しない</option>
+                        <option value="ON">削除する</option>
                       </select> 
                     </div>
                     <div class="form-group">
@@ -252,6 +559,8 @@
             ccc
             </div>
           </div>
+          <!--tab-content終了-->
+ 
           <!-- content-wrapper ends -->
           <!-- partial:partials/_footer.html -->
           <footer class="footer">
